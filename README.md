@@ -3,6 +3,14 @@
 A Leiningen template for calling forth a new kraken project from the
 deep.
 
+## Installing
+
+From this directory, run:
+
+```
+> lein install
+```
+
 ## Usage
 
 Issue the following summons at the wizard prompt:
