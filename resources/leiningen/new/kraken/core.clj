@@ -8,6 +8,7 @@
 (defn handler
   "A handler that does nothing and responds ok."
   [message]
+  (log/info "Received:" message)
   {:status :ok})
 
 (defn -main [& args]
