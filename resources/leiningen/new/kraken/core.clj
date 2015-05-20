@@ -1,19 +1,12 @@
 (ns {{name}}.core
-    (:require [kehaar :as k]
-              [langohr.consumers :as lc]
+    (:require [{{name}}.channels :as channels]
               [{{name}}.queue :as queue]
               [turbovote.resource-config :refer [config]]
-              [clojure.tools.logging :as log]))
-
-(defn handler
-  "A handler that does nothing and responds ok."
-  [message]
-  (log/info "Received:" message)
-  {:status :ok})
+              [clojure.tools.logging :as log]
+              [immutant.util :as immutant]))
 
 (defn -main [& args]
-  (queue/initialize)
-  (lc/subscribe @queue/channel
-                (config :rabbit-mq :queue)
-                (k/simple-responder handler)
-                {:auto-ack true}))
+  (let [rabbit-resources (queue/initialize)]
+    (immutant/at-exit (fn []
+                        (queue/close-all! rabbit-resources)
+                        (channels/close-all!)))))
