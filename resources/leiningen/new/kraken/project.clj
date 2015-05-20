@@ -7,7 +7,7 @@
                  [org.clojure/tools.logging "0.3.1"]
                  [turbovote.resource-config "0.1.4"]
                  [com.novemberain/langohr "3.2.0"]
-                 [turbovote.datomic-toolbox "0.2.4" :exclusions [com.datomic/datomic-pro]]
+                 [democracyworks/datomic-toolbox "1.0.0" :exclusions [com.datomic/datomic-pro]]
                  [com.datomic/datomic-pro "0.9.5153" :exclusions [joda-time]]
                  [org.immutant/core "2.0.0"]
                  [democracyworks/kehaar "0.2.1"]]
