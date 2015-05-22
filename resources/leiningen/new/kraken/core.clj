@@ -7,10 +7,8 @@
               [immutant.util :as immutant]))
 
 (defn -main [& args]
-  (when (config :datomic :intitialize)
-    (db/initialize))
-  (when (config :datomic :run-migrations)
-    (db/run-migrations))
+  (cond (config :datomic :intitialize) (db/initialize)
+        (config :datomic :run-migrations) (db/run-migrations))
   (let [rabbit-resources (queue/initialize)]
     (immutant/at-exit (fn []
                         (queue/close-all! rabbit-resources)
