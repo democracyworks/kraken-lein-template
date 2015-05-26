@@ -4,13 +4,14 @@
             [langohr.channel :as lch]
             [langohr.exchange :as le]
             [langohr.queue :as lq]
+            [kehaar :as k]
+            [{{name}}.channels :as channels]
+            [{{name}}.handlers :as handlers]
             [turbovote.resource-config :refer [config]]))
 
-(def connection (atom nil))
-(def channel (atom nil))
-
 (defn initialize []
-  (let [max-retries 5]
+  (let [connection (atom nil)
+        max-retries 5]
     (loop [attempt 1]
       (try
         (reset! connection
@@ -24,9 +25,19 @@
           (do (Thread/sleep (* attempt 1000))
               (recur (inc attempt)))
           (do (log/error "Connecting to RabbitMQ failed. Bailing.")
-              (throw (ex-info "Connecting to RabbitMQ failed" {:attemts attempt})))))))
-  (reset! channel
-          (let [ch (lch/open @connection)]
-            (lq/declare ch (config :rabbit-mq :queue) {:exclusive false :auto-delete false :durable true})
-            (log/info "RabbitMQ channel declared.")
-                        ch)))
+              (throw (ex-info "Connecting to RabbitMQ failed" {:attemts attempt}))))))
+    (let [ok-ch (lch/open @connection)]
+      (lq/declare ok-ch
+                  "{{name}}.ok"
+                  (config :rabbitmq :queues "{{name}}.ok"))
+      (k/responder ok-ch "{{name}}.ok" handlers/ok)
+      {:connections #{@connection}
+       :channels #{ok-ch}})))
+
+(defn close-resources! [resources]
+  (doseq [resource resources]
+    (when-not (rmq/closed? resource) (rmq/close resource))))
+
+(defn close-all! [{:keys [connections channels]}]
+  (close-resources! channels)
+  (close-resources! connections))

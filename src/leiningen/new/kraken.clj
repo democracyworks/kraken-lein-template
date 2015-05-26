@@ -37,6 +37,7 @@
 
              ["src/{{sanitized}}/core.clj" (render "core.clj" data)]
              ["src/{{sanitized}}/queue.clj" (render "queue.clj" data)]
-             ["test/{{sanitized}}/core_test.clj" (render "core_test.clj" data)]
-
+             ["src/{{sanitized}}/channels.clj" (render "channels.clj" data)]
+             ["src/{{sanitized}}/handlers.clj" (render "handlers.clj" data)]
+             ["test/{{sanitized}}/handlers_test.clj" (render "handlers_test.clj" data)]
              )))
