@@ -31,8 +31,8 @@
                   "{{name}}.ok"
                   (config :rabbitmq :queues "{{name}}.ok"))
       (k/responder ok-ch "{{name}}.ok" handlers/ok)
-      {:connections [@connection]
-       :channels [ok-ch]})))
+      {:connections #{@connection}
+       :channels #{ok-ch}})))
 
 (defn close-resources! [resources]
   (doseq [resource resources]
