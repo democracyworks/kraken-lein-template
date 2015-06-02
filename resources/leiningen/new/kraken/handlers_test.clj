@@ -2,5 +2,5 @@
     (:require [{{name}}.handlers :refer :all]
               [clojure.test :refer :all]))
 
-(deftest ok-test
-  (is (= :ok (:status (ok {})))))
+(deftest ping-test
+  (is (= :ok (:status (ping {})))))

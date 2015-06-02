@@ -1,5 +1,6 @@
 (ns {{name}}.queue
-  (:require [clojure.tools.logging :as log]
+  (:require [clojure.core.async :as async]
+            [clojure.tools.logging :as log]
             [langohr.core :as rmq]
             [langohr.channel :as lch]
             [langohr.exchange :as le]
@@ -26,18 +27,30 @@
               (recur (inc attempt)))
           (do (log/error "Connecting to RabbitMQ failed. Bailing.")
               (throw (ex-info "Connecting to RabbitMQ failed" {:attemts attempt}))))))
-    (let [ok-ch (lch/open @connection)]
-      (lq/declare ok-ch
-                  "{{name}}.ok"
-                  (config :rabbitmq :queues "{{name}}.ok"))
-      (k/responder ok-ch "{{name}}.ok" handlers/ok)
+    (let [events-exchange "events"
+          events-ch (lch/open @connection)
+          heartbeat-ch (lch/open @connection)
+          ping-ch (lch/open @connection)
+          heartbeat (async/chan)]
+      (async/go-loop []
+        (async/<!! (async/timeout 1000))
+        (async/put! heartbeat :beep)
+        (recur))
+      (le/declare events-ch events-exchange "topic" (config :rabbitmq :topics events-exchange))
+      (lq/declare ping-ch
+                  "{{name}}.ping"
+                  (config :rabbitmq :queues "{{name}}.ping"))
+      (k/async->rabbit heartbeat heartbeat-ch events-exchange "{{name}}.heartbeat")
+      (k/responder ping-ch "{{name}}.ping" handlers/ping)
       {:connections #{@connection}
-       :channels #{ok-ch}})))
+       :channels #{events-ch heartbeat-ch ping-ch}
+       :async-channels #{heartbeat-ch}})))
 
 (defn close-resources! [resources]
   (doseq [resource resources]
     (when-not (rmq/closed? resource) (rmq/close resource))))
 
-(defn close-all! [{:keys [connections channels]}]
+(defn close-all! [{:keys [connections channels async-channels]}]
   (close-resources! channels)
-  (close-resources! connections))
+  (close-resources! connections)
+  (doseq [c async-channels] (async/close! c)))
