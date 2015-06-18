@@ -4,7 +4,7 @@
             [langohr.channel :as lch]
             [langohr.exchange :as le]
             [langohr.queue :as lq]
-            [kehaar :as k]
+            [kehaar.core :as k]
             [{{name}}.channels :as channels]
             [{{name}}.handlers :as handlers]
             [turbovote.resource-config :refer [config]]))
