@@ -15,7 +15,7 @@
     (loop [attempt 1]
       (try
         (reset! connection
-                (rmq/connect (or (config :rabbit-mq :connection)
+                (rmq/connect (or (config :rabbitmq :connection)
                                  {})))
         (log/info "RabbitMQ connected.")
         (catch Throwable t
