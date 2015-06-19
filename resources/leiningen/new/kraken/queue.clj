@@ -4,7 +4,7 @@
             [langohr.channel :as lch]
             [langohr.exchange :as le]
             [langohr.queue :as lq]
-            [kehaar :as k]
+            [kehaar.core :as k]
             [{{name}}.channels :as channels]
             [{{name}}.handlers :as handlers]
             [turbovote.resource-config :refer [config]]))
@@ -15,7 +15,7 @@
     (loop [attempt 1]
       (try
         (reset! connection
-                (rmq/connect (or (config :rabbit-mq :connection)
+                (rmq/connect (or (config :rabbitmq :connection)
                                  {})))
         (log/info "RabbitMQ connected.")
         (catch Throwable t
