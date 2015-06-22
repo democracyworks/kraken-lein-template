@@ -19,4 +19,6 @@
                                    :password [:gpg :env]}}
   :uberjar-name "{{name}}.jar"
   :profiles {:uberjar {:aot :all}
-             :dev {:resource-paths ["dev-resources"]}})
+             :dev-common {:resource-paths ["dev-resources"]}
+             :dev-overrides {}
+             :dev [:dev-common :dev-overrides]})
