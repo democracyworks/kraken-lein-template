@@ -1,25 +1,31 @@
-# kraken
+# kraken-works lein template
 
-A Leiningen template for calling forth a new kraken project from the
+A Leiningen template for calling forth a new kraken-works component project from the
 deep.
 
-## Installing
-
-From this directory, run:
-
-```
-> lein install
-```
+This is for backend services.
 
 ## Usage
 
 Issue the following summons at the wizard prompt:
 
 ```
-> lein new kraken <name>
+> lein new kraken-works <name>
 ```
 
 Follow the TODOs printed out and in the README.md
+
+## Installing locally
+
+> This is only necessary if you're testing local changes.
+> Otherwise `lein new kraken-works` will just download the latest version
+> from Clojars.
+
+From this directory, run:
+
+```
+> lein install
+```
 
 ## License
 
