@@ -8,7 +8,7 @@
                  [turbovote.resource-config "0.1.4"]
                  [com.novemberain/langohr "3.2.0"]
                  [democracyworks/datomic-toolbox "1.0.0" :exclusions [com.datomic/datomic-pro]]
-                 [com.datomic/datomic-pro "0.9.5153" :exclusions [joda-time]]
+                 [com.datomic/datomic-pro "0.9.5153"]
                  [org.immutant/core "2.0.1"]
                  [democracyworks/kehaar "0.3.0"]]
   :plugins [[lein-immutant "2.0.0"]]
