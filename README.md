@@ -3,6 +3,8 @@
 A Leiningen template for calling forth a new kraken project from the
 deep.
 
+![KRAKEN off the starboard!](http://orig03.deviantart.net/29af/f/2013/169/7/a/kraken_by_lozanox-d69kdxz.jpg)
+
 ## Installing
 
 From this directory, run:
