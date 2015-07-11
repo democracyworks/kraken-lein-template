@@ -1,9 +1,11 @@
 # kraken-works lein template
 
+![KRAKEN off the starboard!](http://orig03.deviantart.net/29af/f/2013/169/7/a/kraken_by_lozanox-d69kdxz.jpg)
+
 A Leiningen template for calling forth a new kraken-works component project from the
 deep.
 
-This is for backend services.
+This is used for microservices that speak [RabbitMQ](https://www.rabbitmq.com/) (via [Kehaar](https://github.com/democracyworks/kehaar)), use [Datomic](http://www.datomic.com), and deploy to [WildFly](http://wildfly.org).
 
 ## Usage
 
@@ -33,3 +35,5 @@ Copyright © 2015 Democracy Works
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
+
+![Kraken anatomy](http://proximospirits.s3.amazonaws.com/thekraken/book-page-8.png)
