@@ -1,15 +1,15 @@
-(ns leiningen.new.kraken
+(ns leiningen.new.kraken-works
   (:require [leiningen.new.templates :refer [renderer name-to-path ->files]]
             [leiningen.core.main :as main]))
 
-(def render (renderer "kraken"))
+(def render (renderer "kraken-works"))
 
-(defn kraken
+(defn kraken-works
   "FIXME: write documentation"
   [name]
   (let [data {:name name
               :sanitized (name-to-path name)}]
-    (main/info (str "Generating fresh kraken project in directory " (:sanitized data) "/."))
+    (main/info (str "Generating fresh kraken-works project in directory " (:sanitized data) "/."))
 
     (main/info (str "TODO: (you probably want to `cd " name "` first)"))
     (main/info " * in resources/config.edn, change queue name to something more appropriate")
@@ -17,7 +17,7 @@
     (main/info " * `chmod +x script/*`")
     (main/info " * `git init`")
     (main/info " * `git add .`")
-    (main/info " * `git commit -am \"Initial commit.\"`")
+    (main/info " * `git commit -am \"initial commit\"`")
     (main/info " * push this to github")
     (main/info " * make a Buildkite project")
     (->files data
@@ -39,5 +39,4 @@
              ["src/{{sanitized}}/queue.clj" (render "queue.clj" data)]
              ["src/{{sanitized}}/channels.clj" (render "channels.clj" data)]
              ["src/{{sanitized}}/handlers.clj" (render "handlers.clj" data)]
-             ["test/{{sanitized}}/handlers_test.clj" (render "handlers_test.clj" data)]
-             )))
+             ["test/{{sanitized}}/handlers_test.clj" (render "handlers_test.clj" data)])))
