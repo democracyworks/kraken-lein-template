@@ -5,6 +5,7 @@
             [langohr.exchange :as le]
             [langohr.queue :as lq]
             [kehaar.core :as k]
+            [kehaar.wire-up :as wire-up]
             [{{name}}.channels :as channels]
             [{{name}}.handlers :as handlers]
             [turbovote.resource-config :refer [config]]))
@@ -26,13 +27,19 @@
               (recur (inc attempt)))
           (do (log/error "Connecting to RabbitMQ failed. Bailing.")
               (throw (ex-info "Connecting to RabbitMQ failed" {:attempts attempt}))))))
-    (let [ok-ch (lch/open @connection)]
-      (lq/declare ok-ch
-                  "{{name}}.ok"
-                  (config :rabbitmq :queues "{{name}}.ok"))
-      (k/responder ok-ch "{{name}}.ok" handlers/ok)
+    (let [ins []
+          in-outs [(wire-up/incoming-service-handler @connection
+                                                     "{{name}}.ok"
+                                                     (config :rabbitmq :queues "{{name}}.ok")
+                                                     handlers/ok)]
+          out-ins []
+          outs []]
       {:connections #{@connection}
-       :channels #{ok-ch}})))
+       :channels (concat
+                  ins
+                  in-outs
+                  out-ints
+                  outs)})))
 
 (defn close-resources! [resources]
   (doseq [resource resources]

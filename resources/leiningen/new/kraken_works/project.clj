@@ -13,7 +13,7 @@
                                                                   org.slf4j/slf4j-log4j12]]
                  [ch.qos.logback/logback-classic "1.1.3"]
                  [org.immutant/core "2.0.1"]
-                 [democracyworks/kehaar "0.3.0"]]
+                 [democracyworks/kehaar "0.4.0"]]
   :plugins [[lein-immutant "2.0.0"]]
   :main ^:skip-aot {{name}}.core
   :target-path "target/%s"
