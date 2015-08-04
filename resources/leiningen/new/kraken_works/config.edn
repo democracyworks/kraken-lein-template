@@ -3,5 +3,5 @@
             :queues {"{{name}}.ok" {:exclusive false :durable true :auto-delete false}}}
  :datomic {:uri "datomic:mem://{{name}}"
            :partition :{{name}}
-           :intitialize true
+           :initialize true
            :run-migrations true}}
