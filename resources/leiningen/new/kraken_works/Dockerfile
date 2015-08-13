@@ -7,6 +7,7 @@ COPY profiles.clj /usr/src/{{name}}/
 COPY project.clj /usr/src/{{name}}/
 
 RUN lein deps
+RUN lein immutant war --name no-code-just-deps --destination target --nrepl-start
 
 COPY . /usr/src/{{name}}
 
