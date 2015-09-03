@@ -1,7 +1,9 @@
 (ns {{name}}.channels
   (:require [clojure.core.async :as async]))
 
-;;; TODO: Create channels and add them to the list of channels to close.
+(defonce ok-requests (async/chan))
+(defonce ok-responses (async/chan))
+
 (defn close-all! []
-  (doseq [c []]
+  (doseq [c [ok-requests ok-responses]]
     (async/close! c)))
