@@ -34,6 +34,7 @@
              ["script/build" (render "script/build" data)]
 
              ["resources/config.edn" (render "config.edn" data)]
+             ["resources/schemas/.gitkeep" ""]
 
              ["src/{{sanitized}}/core.clj" (render "core.clj" data)]
              ["src/{{sanitized}}/queue.clj" (render "queue.clj" data)]
