@@ -4,7 +4,7 @@ app:
     - rabbitmq
     - wildfly
 wildfly:
-  image: quay.io/democracyworks/wildfly:8.2.0.Final
+  image: quay.io/democracyworks/wildfly:8.2.1.Final
   links:
     - rabbitmq
     - datomic
@@ -19,6 +19,6 @@ datomic:
 rabbitmq:
   image: rabbitmq:3.5.3-management
   ports:
-    - "5672"
+    - "45672:5672"
     - "55672:15672"
   hostname: rabbitmq

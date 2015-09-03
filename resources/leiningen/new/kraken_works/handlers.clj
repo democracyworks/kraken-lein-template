@@ -4,5 +4,5 @@
 (defn ok
   "A handler that does nothing and responds ok."
   [message]
-  (log/info "Received:" message)
+  (log/debug "Received:" message)
   {:status :ok})
