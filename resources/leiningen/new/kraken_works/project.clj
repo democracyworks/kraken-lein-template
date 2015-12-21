@@ -6,8 +6,8 @@
   :dependencies [[org.clojure/clojure "1.7.0"]
                  [org.clojure/tools.logging "0.3.1"]
                  [turbovote.resource-config "0.2.0"]
-                 [democracyworks/datomic-toolbox "1.1.0" :exclusions [com.datomic/datomic-pro]]
                  [com.novemberain/langohr "3.4.2"]
+                 [democracyworks/datomic-toolbox "2.0.0" :exclusions [com.datomic/datomic-pro]]
                  [prismatic/schema "1.0.4"]
                  [com.datomic/datomic-pro "0.9.5327" :exclusions [org.slf4j/slf4j-nop
                                                                   org.slf4j/slf4j-log4j12]]
