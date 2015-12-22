@@ -4,25 +4,25 @@ TODO: Add description
 
 ## Configuration
 
-### New config
+Configuration lives in `resources/config.edn` file, using `#resource-config/env`
+tagged literals for environment variables and `#resource-config/edn` for parsing
+values as EDN (can be used to parse strings into ints, for example).
 
-New configuration on this app should be done in four steps:
+### Parameters
 
-1. Add a configuration to the `resources/config.edn` file, using
-   `#resource-config/env` tagged literals for environment variables.
-2. Add the env var to the `{{name}}@.service.template` docker run
-   command, pulling in the value from Consul.
-   `--env FAKE_ENV_VAR=$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/{{name}}/fake/env/var?raw)`
-3. Set up the value in Consul.
-4. Add them to the README.md (this file) in the Running with
-   docker-compose section as well as documented in the existing config
-   section.
+TODO: Document {{name}} configuration parameters here.
+
+### New config parameters
+
+1. Add new parameter to `resources/config.edn` using an env var (usually).
+1. Add env vars to the `voting-method-works@.service.template` docker run
+command, pulling in the value from Consul.
+    `--env FAKE_ENV_VAR=$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/voting-method-works/fake/env/var?raw)`
+1. Set up the value in Consul.
+1. Add them to the README.md (this file) in the Running with
+docker-compose section as well as documented in the existing config section.
 
 Keys in Consul should be appropriately namespaced, preferably under {{name}}.
-
-### Existing config
-
-TODO: Add {{name}} specific configuration.
 
 ## Usage
 
