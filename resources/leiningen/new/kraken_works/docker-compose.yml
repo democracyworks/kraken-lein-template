@@ -4,7 +4,7 @@ app:
     - rabbitmq
     - wildfly
 wildfly:
-  image: quay.io/democracyworks/wildfly:8.2.1.Final
+  image: quay.io/democracyworks/wildfly:9.0.2.Final-debug
   links:
     - rabbitmq
     - datomic
@@ -15,7 +15,7 @@ wildfly:
     ADMIN_USERNAME: admin
     ADMIN_PASSWORD: admin
 datomic:
-  image: quay.io/democracyworks/datomic-tx:0.9.5153
+  image: quay.io/democracyworks/datomic-tx:0.9.5327
 rabbitmq:
   image: rabbitmq:3.5.3-management
   ports:
