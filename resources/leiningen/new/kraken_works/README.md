@@ -15,9 +15,9 @@ TODO: Document {{name}} configuration parameters here.
 ### New config parameters
 
 1. Add new parameter to `resources/config.edn` using an env var (usually).
-1. Add env vars to the `voting-method-works@.service.template` docker run
+1. Add env vars to the `{{name}}@.service.template` docker run
 command, pulling in the value from Consul.
-    `--env FAKE_ENV_VAR=$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/voting-method-works/fake/env/var?raw)`
+    `--env FAKE_ENV_VAR=$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/{{name}}/fake/env/var?raw)`
 1. Set up the value in Consul.
 1. Add them to the README.md (this file) in the Running with
 docker-compose section as well as documented in the existing config section.
