@@ -1,4 +1,4 @@
-(defproject kraken-works/lein-template "0.4.2"
+(defproject kraken-works/lein-template "0.4.3-SNAPSHOT"
   :description "Leiningen template for kraken-works components"
   :url "https://github.com/democracyworks/kraken-works-lein-template"
   :license {:name "Eclipse Public License"
