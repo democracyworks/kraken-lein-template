@@ -3,7 +3,8 @@
             [datomic-toolbox.core :as db]
             [clojure.tools.logging :as log]
             [immutant.util :as immutant]
-            [kehaar.power :as power]))
+            [kehaar.power :as power]
+            [{{name}}.handlers]))
 
 (defn -main [& args]
   (db/initialize (config [:datomic]))
