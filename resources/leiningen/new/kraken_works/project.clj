@@ -1,6 +1,6 @@
 (defproject {{name}} "0.1.0-SNAPSHOT"
   :description ""
-  :url "http://example.com/FIXME"
+  :url "http://democracy.works"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.7.0"]
@@ -13,7 +13,7 @@
                                                                   org.slf4j/slf4j-log4j12]]
                  [ch.qos.logback/logback-classic "1.1.3"]
                  [org.immutant/core "2.1.2"]
-                 [democracyworks/kehaar "0.5.0"]]
+                 [democracyworks/kehaar "0.5.1-SNAPSHOT"]]
   :plugins [[lein-immutant "2.1.0"]]
   :main ^:skip-aot {{name}}.core
   :target-path "target/%s"

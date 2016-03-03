@@ -1,7 +1,4 @@
 {:rabbitmq {:connection {:host #resource-config/env "RABBITMQ_PORT_5672_TCP_ADDR"
-                         :port #resource-config/edn #resource-config/env "RABBITMQ_PORT_5672_TCP_PORT"}
-            :queues {"{{name}}.ok" {:exclusive false :durable true :auto-delete false}}}
+                         :port #resource-config/edn #resource-config/env "RABBITMQ_PORT_5672_TCP_PORT"}}
  :datomic {:uri "datomic:mem://{{name}}"
-           :partition :{{name}}
-           :initialize true
-           :run-migrations true}}
+           :partition :{{name}}}}
