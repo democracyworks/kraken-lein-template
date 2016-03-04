@@ -38,7 +38,5 @@
              ["resources/logback.xml" (render "logback.xml" data)]
 
              ["src/{{sanitized}}/core.clj" (render "core.clj" data)]
-             ["src/{{sanitized}}/queue.clj" (render "queue.clj" data)]
-             ["src/{{sanitized}}/channels.clj" (render "channels.clj" data)]
              ["src/{{sanitized}}/handlers.clj" (render "handlers.clj" data)]
              ["test/{{sanitized}}/handlers_test.clj" (render "handlers_test.clj" data)])))
