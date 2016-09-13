@@ -6,10 +6,14 @@ WORKDIR /usr/src/{{name}}
 COPY profiles.clj /usr/src/{{name}}/
 COPY project.clj /usr/src/{{name}}/
 
-RUN lein deps
-RUN lein immutant war --name no-code-just-deps --destination target --nrepl-start
+ARG env=production
+ARG DATOMIC_USERNAME
+ARG DATOMIC_PASSWORD
+
+RUN lein with-profiles $env,datomic-repo deps
+RUN lein with-profiles $env,datomic-repo immutant war --name no-code-just-deps --destination target --nrepl-start
 
 COPY . /usr/src/{{name}}
 
-RUN lein test
-RUN lein immutant war --name {{name}} --destination target
+RUN lein with-profiles $env,datomic-repo,test test
+RUN lein with-profiles $env,datomic-repo immutant war --name {{name}} --destination target

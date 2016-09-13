@@ -7,19 +7,21 @@
                  [org.clojure/tools.logging "0.3.1"]
                  [turbovote.resource-config "0.2.0"]
                  [com.novemberain/langohr "3.6.1"]
-                 [democracyworks/datomic-toolbox "2.0.1" :exclusions [com.datomic/datomic-pro]]
-                 [prismatic/schema "1.1.2"]
-                 [com.datomic/datomic-pro "0.9.5327" :exclusions [org.slf4j/slf4j-nop
-                                                                  org.slf4j/slf4j-log4j12]]
+                 [democracyworks/datomic-toolbox "2.0.2"
+                  :exclusions [com.datomic/datomic-pro]]
+                 [prismatic/schema "1.1.3"]
+                 [com.datomic/datomic-pro "0.9.5394"
+                  :exclusions [org.slf4j/slf4j-nop
+                               org.slf4j/slf4j-log4j12]]
                  [ch.qos.logback/logback-classic "1.1.7"]
                  [org.immutant/core "2.1.5"]
-                 [democracyworks/kehaar "0.5.0"]]
+                 [democracyworks/kehaar "0.6.0"]]
   :plugins [[lein-immutant "2.1.0"]]
   :main ^:skip-aot {{name}}.core
   :target-path "target/%s"
   :repositories {"my.datomic.com" {:url "https://my.datomic.com/repo"
-                                   :username [:gpg :env]
-                                   :password [:gpg :env]}}
+                                   :username [:gpg :env/datomic_username]
+                                   :password [:gpg :env/datomic_password]}}
   :uberjar-name "{{name}}.jar"
   :profiles {:uberjar {:aot :all}
              :dev-common {:resource-paths ["dev-resources"]}
