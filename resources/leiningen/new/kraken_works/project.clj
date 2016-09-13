@@ -13,6 +13,8 @@
                  [com.datomic/datomic-pro "0.9.5394"
                   :exclusions [org.slf4j/slf4j-nop
                                org.slf4j/slf4j-log4j12]]
+                 [com.amazonaws/aws-java-sdk-dynamodb "1.11.6"
+                  :exclusions [commons-codec commons-logging]]
                  [ch.qos.logback/logback-classic "1.1.7"]
                  [org.immutant/core "2.1.5"]
                  [democracyworks/kehaar "0.6.0"]]
