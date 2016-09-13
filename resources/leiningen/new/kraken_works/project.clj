@@ -28,4 +28,5 @@
   :profiles {:uberjar {:aot :all}
              :dev-common {:resource-paths ["dev-resources"]}
              :dev-overrides {}
-             :dev [:dev-common :dev-overrides]})
+             :dev [:dev-common :dev-overrides]
+             :test {:jvm-opts ["-Dlog-level=OFF"]}})
