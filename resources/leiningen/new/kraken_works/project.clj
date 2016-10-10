@@ -17,7 +17,7 @@
                   :exclusions [commons-codec commons-logging]]
                  [ch.qos.logback/logback-classic "1.1.7"]
                  [org.immutant/core "2.1.5"]
-                 [democracyworks/kehaar "0.6.0"]]
+                 [democracyworks/kehaar "0.7.2"]]
   :plugins [[lein-immutant "2.1.0"]]
   :main ^:skip-aot {{name}}.core
   :target-path "target/%s"
