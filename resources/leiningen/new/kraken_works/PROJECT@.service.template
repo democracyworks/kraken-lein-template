@@ -24,7 +24,7 @@ ExecStartPre=-/usr/bin/docker rm ${CONTAINER}
 ExecStartPre=/bin/bash -c 'sleep 2 && curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/buildkite/dockercfg?raw -o /root/.dockercfg'
 ExecStartPre=/usr/bin/docker pull ${DOCKER_REPO}:${VERSION}
 
-ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} --restart=always \
+ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} \
   --link rabbitmq:rabbitmq \
   --link wildfly:wildfly \
   --env FAKE_ENV_VAR="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/{{name}}/fake/env/var?raw)" \
