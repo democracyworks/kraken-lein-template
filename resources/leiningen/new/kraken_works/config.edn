@@ -1,20 +1,22 @@
-{:rabbitmq {:connection {:host #resource-config/env "RABBITMQ_PORT_5672_TCP_ADDR"
-                         :port #resource-config/edn #resource-config/env "RABBITMQ_PORT_5672_TCP_PORT"}
-            :kehaar {:event-exchanges []
+{:rabbitmq
+ {:connection {:host #resource-config/env "RABBITMQ_PORT_5672_TCP_ADDR"
+               :port #resource-config/edn #resource-config/env "RABBITMQ_PORT_5672_TCP_PORT"}
+  :kehaar {:event-exchanges [{:exchange "events"}]
 
-                     :incoming-services
-                     [{:queue "{{name}}.ok"
-                       :f {{name}}.handlers/ok
-                       :response true
-                       :threads 2
-                       :prefetch-limit 2}]
+           :incoming-services
+           [{:queue "{{name}}.ok"
+             :f {{name}}.handlers/ok
+             :response true
+             :threads 2
+             :prefetch-limit 2}]
 
-                     :external-services []
+           :external-services []
 
-                     :incoming-events []
+           :incoming-events []
 
-                     :outgoing-events []}}
- :datomic {:uri #resource-config/env "DATOMIC_URI"
+           :outgoing-events []}}
+
+ :datomic {:uri #resource-config/env "{{env-var-style}}_DATOMIC_URI"
            :partition :{{name}}
            :initialize true
            :run-migrations true}}

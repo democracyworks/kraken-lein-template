@@ -6,8 +6,6 @@ After=consul@%i.service
 Wants=consul@%i.service
 After=rabbitmq@%i.service
 Requires=rabbitmq@%i.service
-After=wildfly@%i.service
-Requires=wildfly@%i.service
 
 [Service]
 EnvironmentFile=/etc/environment
@@ -25,12 +23,14 @@ ExecStartPre=/bin/bash -c 'sleep 2 && curl -s http://${COREOS_PRIVATE_IPV4}:8500
 ExecStartPre=/usr/bin/docker pull ${DOCKER_REPO}:${VERSION}
 
 ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} \
-  --link rabbitmq:rabbitmq \
-  --link wildfly:wildfly \
-  --env FAKE_ENV_VAR="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/{{name}}/fake/env/var?raw)" \
+  --dns $COREOS_PRIVATE_IPV4 \
+  --env RABBITMQ_PORT_5672_TCP_ADDR=rabbitmq.service.consul \
+  --env RABBITMQ_PORT_5672_TCP_PORT=5672 \
+  --env NEW_RELIC_LICENSE_KEY=$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/new-relic/license-key?raw) \
+  --publish 10000 \
   ${DOCKER_REPO}:${VERSION}'
 
 ExecStop=/usr/bin/docker stop ${CONTAINER}
 
 [X-Fleet]
-MachineOf=wildfly@%i.service
+MachineOf=consul@%i.service
