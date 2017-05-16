@@ -1,6 +1,7 @@
 (ns leiningen.new.kraken-works
   (:require [leiningen.new.templates :refer [renderer name-to-path ->files]]
-            [leiningen.core.main :as main]))
+            [leiningen.core.main :as main]
+            [clojure.string :as str]))
 
 (def render (renderer "kraken-works"))
 
@@ -8,7 +9,8 @@
   "FIXME: write documentation"
   [name]
   (let [data {:name name
-              :sanitized (name-to-path name)}]
+              :sanitized (name-to-path name)
+              :env-var-style (-> name name-to-path str/upper-case)}]
     (main/info (str "Generating fresh kraken-works project in directory " (:sanitized data) "/."))
 
     (main/info (str "TODO: (you probably want to `cd " name "` first)"))
