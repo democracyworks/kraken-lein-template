@@ -23,7 +23,9 @@ ExecStartPre=/bin/bash -c 'sleep 2 && curl -s http://${COREOS_PRIVATE_IPV4}:8500
 ExecStartPre=/usr/bin/docker pull ${DOCKER_REPO}:${VERSION}
 
 ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} \
-  --link rabbitmq:rabbitmq \
+  --dns $COREOS_PRIVATE_IPV4 \
+  --env RABBITMQ_PORT_5672_TCP_ADDR=rabbitmq.service.consul \
+  --env RABBITMQ_PORT_5672_TCP_PORT=5672 \
   --env FAKE_ENV_VAR="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/{{name}}/fake/env/var?raw)" \
   --publish 10000 \
   ${DOCKER_REPO}:${VERSION}'
