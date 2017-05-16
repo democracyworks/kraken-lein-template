@@ -19,7 +19,7 @@
                  [org.immutant/core "2.1.6"]
                  [democracyworks/kehaar "0.10.4"]]
   :plugins [[lein-immutant "2.1.0"]
-            [com.carouselapps/jar-copier "0.4.0"]]
+            [com.pupeno/jar-copier "0.4.0"]]
   :java-agents [[com.newrelic.agent.java/newrelic-agent "3.35.1"]]
   :jar-copier {:java-agents true
                :destination "resources/jars"}
