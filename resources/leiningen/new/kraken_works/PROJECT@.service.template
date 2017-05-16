@@ -28,6 +28,7 @@ ExecStart=/bin/bash -c 'docker run --name ${CONTAINER} \
   --link rabbitmq:rabbitmq \
   --link wildfly:wildfly \
   --env FAKE_ENV_VAR="$(curl -s http://${COREOS_PRIVATE_IPV4}:8500/v1/kv/{{name}}/fake/env/var?raw)" \
+  --publish 10000 \
   ${DOCKER_REPO}:${VERSION}'
 
 ExecStop=/usr/bin/docker stop ${CONTAINER}
