@@ -18,7 +18,8 @@ RUN lein with-profiles $env,datomic-repo,test test
 RUN lein with-profiles $env,datomic-repo uberjar
 
 CMD java ${JVM_OPTS:--XX:+UseG1GC} \
-    -Ddatomic.objectCacheMax=${DATOMIC_OBJ_CACHE_MAX:-256m} \
+    -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap \
+    -XX:MaxRAMFraction=1 \
     -javaagent:resources/jars/com.newrelic.agent.java/newrelic-agent.jar \
     $YOURKIT_AGENT_OPTION \
     -jar target/{{name}}.jar
