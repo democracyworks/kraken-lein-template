@@ -5,7 +5,7 @@
 A Leiningen template for calling forth a new kraken-works component project from the
 deep.
 
-This is used for microservices that speak [RabbitMQ](https://www.rabbitmq.com/) (via [Kehaar](https://github.com/democracyworks/kehaar)), use [Datomic](http://www.datomic.com), and deploy to [WildFly](http://wildfly.org).
+This is used for microservices that speak [RabbitMQ](https://www.rabbitmq.com/) (via [Kehaar](https://github.com/democracyworks/kehaar)), and use [Datomic](http://www.datomic.com).
 
 ## Usage
 
