@@ -15,7 +15,7 @@
                  [com.amazonaws/aws-java-sdk-dynamodb "1.11.128"
                   :exclusions [commons-codec commons-logging]]
                  [ch.qos.logback/logback-classic "1.2.2"]
-                 [democracyworks/kehaar "0.10.4"]]
+                 [democracyworks/kehaar "0.11.2"]]
   :plugins [[com.pupeno/jar-copier "0.4.0"]]
   :java-agents [[com.newrelic.agent.java/newrelic-agent "3.35.1"]]
   :jar-copier {:java-agents true
