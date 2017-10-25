@@ -6,7 +6,6 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/tools.logging "0.3.1"]
                  [turbovote.resource-config "0.2.1"]
-                 [com.novemberain/langohr "3.7.0"]
                  [democracyworks/datomic-toolbox "2.0.4"
                   :exclusions [com.datomic/datomic-pro]]
                  [prismatic/schema "1.1.6"]
