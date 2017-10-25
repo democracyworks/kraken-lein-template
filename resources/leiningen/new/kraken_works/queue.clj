@@ -1,14 +1,12 @@
 (ns {{name}}.queue
   (:require [langohr.core :as rmq]
             [kehaar.rabbitmq]
-            [kehaar.configured :as kehaar]
-            [turbovote.resource-config :refer [config]]))
+            [kehaar.configured :as kehaar]))
 
-(defn initialize []
+(defn initialize [{:keys [connection kehaar]}]
   (let [max-retries 5
-        rabbit-config (config [:rabbitmq :connection] {})
-        connection (kehaar.rabbitmq/connect-with-retries rabbit-config max-retries)
-        kehaar-resources (kehaar/init! connection (config [:rabbitmq :kehaar]))]
+        rmq-conn (kehaar.rabbitmq/connect-with-retries connection max-retries)
+        kehaar-resources (kehaar/init! rmq-conn kehaar)]
     {:connections [connection]
      :kehaar-resources kehaar-resources}))
 

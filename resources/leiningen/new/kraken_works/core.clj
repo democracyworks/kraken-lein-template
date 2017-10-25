@@ -10,7 +10,7 @@
   (cond (config [:datomic :initialize]) (db/initialize (config [:datomic]))
         (config [:datomic :run-migrations]) (do (db/configure! (config [:datomic]))
                                                 (db/run-migrations)))
-  (let [rabbit-resources (queue/initialize)]
+  (let [rabbit-resources (queue/initialize (config [:rabbitmq]))]
     (.addShutdownHook (Runtime/getRuntime)
      (Thread. (fn []
                 (queue/close-all! rabbit-resources)
