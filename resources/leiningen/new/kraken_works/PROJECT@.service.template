@@ -11,6 +11,7 @@ Requires=rabbitmq@%i.service
 EnvironmentFile=/etc/environment
 TimeoutStartSec=10m
 TimeoutStopSec=10m
+Restart=on-failure
 
 Environment=DOCKER_REPO=
 Environment=VERSION=
