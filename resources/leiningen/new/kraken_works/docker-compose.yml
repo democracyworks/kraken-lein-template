@@ -7,6 +7,7 @@ services:
     environment:
       RABBITMQ_PORT_5672_TCP_ADDR: rabbitmq
       RABBITMQ_PORT_5672_TCP_PORT: "5672"
+{{#datomic?}}
       DATOMIC_URI: "datomic:dev://datomic:4334/{{name}}"
   datomic:
     image: quay.io/democracyworks/datomic-tx:0.9.5544
@@ -16,6 +17,7 @@ services:
       - "4336:4336"
     environment:
       ALT_HOST: localhost
+{{/datomic?}}
   rabbitmq:
     image: rabbitmq:3.6.9-management
     ports:

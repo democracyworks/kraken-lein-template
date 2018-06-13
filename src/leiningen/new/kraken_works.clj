@@ -5,9 +5,10 @@
 
 (def render (renderer "kraken-works"))
 
-(def default-options {})
+(def default-options {:datomic? true})
 
-(def valid-options {})
+(def valid-options {"--datomic" {:datomic? true}
+                    "--no-datomic" {:datomic? false}})
 
 (defn parse-opt [opt]
   (if-let [opt-map (valid-options opt)]
@@ -41,7 +42,8 @@
            ["{{name}}@.service.template" (render "PROJECT@.service.template" data)]
            ["docker-compose.yml" (render "docker-compose.yml" data)]
            ["newrelic.yml" (render "newrelic.yml" data)]
-           ["profiles.clj.sample" (render "profiles.clj.sample" data)]
+           (when (:datomic? data)
+             ["profiles.clj.sample" (render "profiles.clj.sample" data)])
            ["project.clj" (render "project.clj" data)]
            ["README.md" (render "README.md" data)]
            ["LICENSE" (render "LICENSE" data)]
@@ -50,7 +52,8 @@
            ["script/build" (render "script/build" data)]
 
            ["resources/config.edn" (render "config.edn" data)]
-           ["resources/schemas/.gitkeep" ""]
+           (when (:datomic? data)
+             ["resources/schemas/.gitkeep" ""])
            ["resources/logback.xml" (render "logback.xml" data)]
 
            ["src/{{sanitized}}/core.clj" (render "core.clj" data)]
