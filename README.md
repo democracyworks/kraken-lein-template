@@ -17,6 +17,17 @@ Issue the following summons at the wizard prompt:
 
 Follow the TODOs printed out and in the README.md
 
+### Options
+
+Any options should be separated by `--` so that they are not interpreted as
+options to the `lein new` command:
+
+```
+> lein new kraken-works <name> -- [OPTIONS]
+```
+
+* `--no-datomic` Exclude datomic-specific code, resources, and files.
+
 ## Installing locally
 
 > This is only necessary if you're testing local changes.

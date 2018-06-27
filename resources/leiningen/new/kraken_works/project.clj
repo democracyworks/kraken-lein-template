@@ -6,6 +6,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/tools.logging "0.3.1"]
                  [turbovote.resource-config "0.2.1"]
+{{#datomic?}}
                  [democracyworks/datomic-toolbox "2.0.4"
                   :exclusions [com.datomic/datomic-pro]]
                  [prismatic/schema "1.1.6"]
@@ -14,6 +15,7 @@
                                org.slf4j/slf4j-log4j12]]
                  [com.amazonaws/aws-java-sdk-dynamodb "1.11.128"
                   :exclusions [commons-codec commons-logging]]
+{{/datomic?}}
                  [ch.qos.logback/logback-classic "1.2.2"]
                  [democracyworks/kehaar "0.11.2"]]
   :plugins [[com.pupeno/jar-copier "0.4.0"]]
@@ -23,9 +25,11 @@
   :prep-tasks ["javac" "compile" "jar-copier"]
 
   :main ^:skip-aot {{name}}.core
+{{#datomic?}}
   :repositories {"my.datomic.com" {:url "https://my.datomic.com/repo"
                                    :username [:gpg :env/datomic_username]
                                    :password [:gpg :env/datomic_password]}}
+{{/datomic?}}
   :uberjar-name "{{name}}.jar"
   :profiles {:uberjar {:aot :all}
              :dev-common {:resource-paths ["dev-resources"]}
