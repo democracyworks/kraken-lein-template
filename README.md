@@ -20,7 +20,7 @@ Follow the TODOs printed out and in the README.md
 ### Options
 
 Any options should be separated by `--` so that they are not interpreted as
-options to the `lein new` command:
+options to the `lein new` command; this means you'll have a lone `--` in the middle of your command which may look weird, but it will be correct:
 
 ```
 > lein new kraken-works <name> -- [OPTIONS]
