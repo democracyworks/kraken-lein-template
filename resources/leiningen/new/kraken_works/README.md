@@ -31,6 +31,7 @@ TODO: Add usage
 ## Running
 
 ### With docker-compose
+{{#datomic?}}
 
 First, create a `profiles.clj`.
 
@@ -40,6 +41,7 @@ First, create a `profiles.clj`.
 
 Edit the datomic username and password in `profiles.clj` (it won't be
 added to git).
+{{/datomic?}}
 
 Build it:
 
