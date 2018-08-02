@@ -7,7 +7,7 @@
   (let [max-retries 5
         rmq-conn (kehaar.rabbitmq/connect-with-retries connection max-retries)
         kehaar-resources (kehaar/init! rmq-conn kehaar)]
-    {:connections [connection]
+    {:connections [rmq-conn]
      :kehaar-resources kehaar-resources}))
 
 (defn close-resources! [resources]
