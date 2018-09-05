@@ -48,7 +48,6 @@
           ["README.md" (render "README.md" data)]
           ["LICENSE" (render "LICENSE" data)]
 
-          ["script/deploy" (render "script/deploy" data)]
           ["script/build" (render "script/build" data)]
 
           ["resources/config.edn" (render "config.edn" data)]
