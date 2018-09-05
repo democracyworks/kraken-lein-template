@@ -40,7 +40,6 @@
     (->> [[".buildkite/pipeline.yml" (render ".buildkite/pipeline.yml" data)]
           [".gitignore" (render ".gitignore" data)]
           ["Dockerfile" (render "Dockerfile" data)]
-          ["{{name}}@.service.template" (render "PROJECT@.service.template" data)]
           ["docker-compose.yml" (render "docker-compose.yml" data)]
           ["newrelic.yml" (render "newrelic.yml" data)]
           (when (:datomic? data)
