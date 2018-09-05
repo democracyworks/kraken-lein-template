@@ -8,9 +8,9 @@ services:
       RABBITMQ_PORT_5672_TCP_ADDR: rabbitmq
       RABBITMQ_PORT_5672_TCP_PORT: "5672"
 {{#datomic?}}
-      DATOMIC_URI: "datomic:dev://datomic:4334/{{name}}"
+      {{env-var-style}}_DATOMIC_URI: "datomic:dev://datomic:4334/{{name}}"
   datomic:
-    image: quay.io/democracyworks/datomic-tx:0.9.5544
+    image: quay.io/democracyworks/datomic-tx:0.9.5703
     ports:
       - "4334:4334"
       - "4335:4335"
