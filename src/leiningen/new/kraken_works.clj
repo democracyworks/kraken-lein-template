@@ -37,7 +37,8 @@
     (main/info " * `git commit -am \"initial commit\"`")
     (main/info " * push this to github")
     (main/info " * make a Buildkite project")
-    (->> [[".gitignore" (render ".gitignore" data)]
+    (->> [[".buildkite/pipeline.yml" (render ".buildkite/pipeline.yml" data)]
+          [".gitignore" (render ".gitignore" data)]
           ["Dockerfile" (render "Dockerfile" data)]
           ["{{name}}@.service.template" (render "PROJECT@.service.template" data)]
           ["docker-compose.yml" (render "docker-compose.yml" data)]

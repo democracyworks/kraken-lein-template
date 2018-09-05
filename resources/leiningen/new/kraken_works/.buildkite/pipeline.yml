@@ -1,0 +1,16 @@
+---
+steps:
+  - name: "Build"
+    command: "script/build"
+
+  - "wait"
+
+  - trigger: democracy-works-kubernetes
+    label: Deploy
+    branches: master
+    async: true
+    build:
+      branch: master
+      env:
+        DW_COMPONENT: {{name}}
+        SOURCE_JOB_ID: "${BUILDKITE_JOB_ID}"
