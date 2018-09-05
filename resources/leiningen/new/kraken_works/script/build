@@ -6,15 +6,6 @@ if [[ -z $SERVICE ]]; then
   SERVICE=${PWD##*/}
 fi
 
-if [[ -z $SERVICE_TEMPLATE ]]; then
-  SERVICE_TEMPLATE="${SERVICE}@.service.template"
-fi
-
-if [[ ! -e $SERVICE_TEMPLATE ]]; then
-  echo "Please provide a service template"
-  exit 1
-fi
-
 if [[ -z $DOCKER_REPO && -n $1 ]]; then
   DOCKER_REPO=$1
 fi
@@ -43,26 +34,25 @@ fi
 
 IMAGE_TAG=${BRANCH}-$(git rev-parse --short ${COMMIT})
 
-IMAGE_NAME="${DOCKER_REPO}:${IMAGE_TAG}"
+IMAGE_NAME_SHA="${DOCKER_REPO}:${IMAGE_TAG}"
+IMAGE_NAME_BRANCH="${DOCKER_REPO}:${BRANCH}"
 
-echo "Building ${IMAGE_NAME}"
-docker build -t ${IMAGE_NAME} .
+echo "Building ${IMAGE_NAME_SHA}"
+docker build --pull \
+             -t ${IMAGE_NAME_SHA} .
 
-if [[ $CI = "true" && $BUILDKITE_PULL_REQUEST = "false" ]]; then
+if [[ $CI = "true" ]]; then
   echo '--- pushing docker image to registry'
-  docker push ${IMAGE_NAME}
+  echo "Pushing as ${IMAGE_NAME_SHA}"
+  docker push ${IMAGE_NAME_SHA}
+  echo "Pushing as ${IMAGE_NAME_BRANCH}"
+  docker tag ${IMAGE_NAME_SHA} ${IMAGE_NAME_BRANCH}
+  docker push ${IMAGE_NAME_BRANCH}
 else
-  echo "If you'd like to push this to the Docker repo, run: docker push ${DOCKER_REPO}:${IMAGE_TAG}"
+  echo "If you'd like to push this to the Docker repo, run: docker push ${IMAGE_NAME_SHA}"
 fi
 
-echo '--- updating fleet service template'
-cp $SERVICE_TEMPLATE ${SERVICE}@.service
-
-perl -p -i -e "s|^Environment=DOCKER_REPO=.*$|Environment=DOCKER_REPO=${DOCKER_REPO}|" ${SERVICE}@.service
-perl -p -i -e "s/^Environment=VERSION=.*$/Environment=VERSION=${IMAGE_TAG}/" ${SERVICE}@.service
-perl -p -i -e "s/^Environment=CONTAINER=.*$/Environment=CONTAINER=${SERVICE}/" ${SERVICE}@.service
-
 if hash buildkite-agent 2>/dev/null ; then
-  echo '--- saving service file'
-  buildkite-agent artifact upload ${SERVICE}@.service
+  echo '--- saving container-image metadata'
+  buildkite-agent meta-data set container-image ${IMAGE_NAME_SHA}
 fi
