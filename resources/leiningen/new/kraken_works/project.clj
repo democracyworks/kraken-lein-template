@@ -5,7 +5,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/tools.logging "0.4.1"]
-                 [turbovote.resource-config "0.2.1"]
+                 [democracyworks/resource-config "1.0.0"]
 {{#datomic?}}
                  [democracyworks/datomic-toolbox "2.0.5"
                   :exclusions [com.datomic/datomic-pro]]

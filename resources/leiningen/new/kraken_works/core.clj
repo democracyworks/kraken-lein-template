@@ -1,7 +1,7 @@
 (ns {{name}}.core
   (:require [{{name}}.channels :as channels]
             [{{name}}.queue :as queue]
-            [turbovote.resource-config :refer [config]]
+            [resource-config.core :refer [config]]
             {{#datomic?}}
             [datomic-toolbox.core :as db]
             {{/datomic?}}
