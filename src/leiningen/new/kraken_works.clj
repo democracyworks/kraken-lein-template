@@ -31,7 +31,6 @@
 
     (main/info (str "TODO: (you probably want to `cd " name "` first)"))
     (main/info " * Review and address the TODO items in the README.")
-    (main/info " * `chmod +x script/*`")
     (main/info " * Add any other needed kubernetes resources to the `deploy/` dirs (see existing similar components).")
     (main/info " * `git init`")
     (main/info " * `git add .`")
@@ -42,7 +41,7 @@
           [".gitignore" (render ".gitignore" data)]
           ["Dockerfile" (render "Dockerfile" data)]
           ["docker/app_container/usr/local/bin/entrypoint.sh"
-           (render "entrypoint.sh" data)]
+           (render "entrypoint.sh" data) :executable true]
           ["docker-compose.yml" (render "docker-compose.yml" data)]
           ["deploy/build.config" (render "deploy/build.config" data)]
           ["deploy/development.config" (render "deploy/development.config" data)]
@@ -58,9 +57,10 @@
           ["LICENSE" (render "LICENSE" data)]
 
           ["script/env.sh" (render "script/env.sh" data)]
-          ["script/build" (render "script/build" data)]
-          ["script/deploy" (render "script/deploy" data)]
-          ["script/deploy_wrap.sh" (render "script/deploy_wrap.sh" data)]
+          ["script/build" (render "script/build" data) :executable true]
+          ["script/deploy" (render "script/deploy" data) :executable true]
+          ["script/deploy_wrap.sh" (render "script/deploy_wrap.sh" data)
+           :executable true]
 
           ["resources/config.edn" (render "config.edn" data)]
           (when (:datomic? data)

@@ -5,6 +5,9 @@ services:
     depends_on:
       - rabbitmq
     environment:
+      DEPLOYMENT_NAME: {{name}}
+      CGROUP_HEAP: "true"
+      MaxRAMFraction: 2
       RABBITMQ_PORT_5672_TCP_ADDR: rabbitmq
       RABBITMQ_PORT_5672_TCP_PORT: "5672"
 {{#datomic?}}
@@ -19,7 +22,7 @@ services:
       ALT_HOST: localhost
 {{/datomic?}}
   rabbitmq:
-    image: rabbitmq:3.6.9-management
+    image: rabbitmq:3.7.8-management
     ports:
       - "45672:5672"
       - "55672:15672"
