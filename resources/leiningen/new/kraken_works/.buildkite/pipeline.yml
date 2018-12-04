@@ -3,10 +3,20 @@ steps:
   - name: "Build"
     command: "script/build"
 
-  - "wait"
+  - wait
+
+  - command: "script/deploy_wrap.sh development"
+    label: "Deploy to Development"
+    branches: "master"
+
+  - command: "script/deploy_wrap.sh production"
+    label: "Deploy to Production"
+    branches: "v*.*.*"
+    #Branch filters also imply Tag filter.
+    #Make sure "Build Tags" is checked in the Github settings for the project
 
   - trigger: democracy-works-kubernetes
-    label: Deploy
+    label: "Deploy to legacy k8s"
     branches: master
     async: true
     build:
