@@ -17,7 +17,8 @@
                   :exclusions [commons-codec commons-logging]]
 {{/datomic?}}
                  [ch.qos.logback/logback-classic "1.2.3"]
-                 [democracyworks/kehaar "1.0.0"]]
+                 [democracyworks/kehaar "1.0.0"]
+                 [mount "0.1.14"]]
   :plugins [[com.pupeno/jar-copier "0.4.0"]]
   :java-agents [[com.newrelic.agent.java/newrelic-agent "4.8.0"]]
   :jar-copier {:java-agents true

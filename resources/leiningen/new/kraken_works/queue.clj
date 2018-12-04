@@ -1,12 +1,20 @@
 (ns {{name}}.queue
   (:require [langohr.core :as rmq]
             [kehaar.rabbitmq]
-            [kehaar.configured :as kehaar]))
+            [kehaar.configured :as kehaar]
+            [mount.core :refer [defstate]]
+            [resource-config.core :as rc]))
 
-(defn initialize [{:keys [connection kehaar]}]
+(defstate rabbitmq-config
+  :start (rc/config [:rabbitmq])
+  :stop  (rc/reload-config!))
+
+(defn initialize [{connection-config :connection kehaar-config :kehaar}]
   (let [max-retries 5
-        rmq-conn (kehaar.rabbitmq/connect-with-retries connection max-retries)
-        kehaar-resources (kehaar/init! rmq-conn kehaar)]
+        rabbit-cfg (kehaar.rabbitmq/dissoc-blank-config-params-with-defaults
+                    connection-config)
+        rmq-conn (kehaar.rabbitmq/connect-with-retries rabbit-cfg max-retries)
+        kehaar-resources (kehaar/init! rmq-conn kehaar-config)]
     {:connections [rmq-conn]
      :kehaar-resources kehaar-resources}))
 
@@ -17,3 +25,7 @@
 (defn close-all! [{:keys [connections kehaar-resources]}]
   (kehaar/shutdown! kehaar-resources)
   (close-resources! connections))
+
+(defstate rabbit-resources
+  :start (initialize rabbitmq-config)
+  :stop  (close-all! rabbit-resources))
