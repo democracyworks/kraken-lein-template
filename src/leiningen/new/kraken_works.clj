@@ -31,7 +31,7 @@
 
     (main/info (str "TODO: (you probably want to `cd " name "` first)"))
     (main/info " * Review and address the TODO items in the README.")
-    (main/info " * `chmod +x script/*`")
+    (main/info " * Add any other needed kubernetes resources to the `deploy/` dirs (see existing similar components).")
     (main/info " * `git init`")
     (main/info " * `git add .`")
     (main/info " * `git commit -am \"initial commit\"`")
@@ -40,7 +40,15 @@
     (->> [[".buildkite/pipeline.yml" (render ".buildkite/pipeline.yml" data)]
           [".gitignore" (render ".gitignore" data)]
           ["Dockerfile" (render "Dockerfile" data)]
+          ["docker/app_container/usr/local/bin/entrypoint.sh"
+           (render "entrypoint.sh" data) :executable true]
           ["docker-compose.yml" (render "docker-compose.yml" data)]
+          ["deploy/build.config" (render "deploy/build.config" data)]
+          ["deploy/development.config" (render "deploy/development.config" data)]
+          ["deploy/production.config" (render "deploy/production.config" data)]
+          [(str "deploy/" (:name data) ".pod_disruption_budget.yml")
+           (render "deploy/pod_disruption_budget.yml" data)]
+
           ["newrelic.yml" (render "newrelic.yml" data)]
           (when (:datomic? data)
             ["profiles.clj.sample" (render "profiles.clj.sample" data)])
@@ -48,7 +56,11 @@
           ["README.md" (render "README.md" data)]
           ["LICENSE" (render "LICENSE" data)]
 
-          ["script/build" (render "script/build" data)]
+          ["script/env.sh" (render "script/env.sh" data)]
+          ["script/build" (render "script/build" data) :executable true]
+          ["script/deploy" (render "script/deploy" data) :executable true]
+          ["script/deploy_wrap.sh" (render "script/deploy_wrap.sh" data)
+           :executable true]
 
           ["resources/config.edn" (render "config.edn" data)]
           (when (:datomic? data)
@@ -57,6 +69,8 @@
 
           ["src/{{sanitized}}/core.clj" (render "core.clj" data)]
           ["src/{{sanitized}}/queue.clj" (render "queue.clj" data)]
+          (when (:datomic? data)
+            ["src/{{sanitized}}/entities.clj" (render "entities.clj" data)])
           ["src/{{sanitized}}/channels.clj" (render "channels.clj" data)]
           ["src/{{sanitized}}/handlers.clj" (render "handlers.clj" data)]
           ["test/{{sanitized}}/handlers_test.clj" (render "handlers_test.clj" data)]]

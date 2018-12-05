@@ -1,58 +1,22 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -o errexit
 
-set -e
+. script/env.sh
 
-if [[ -z $SERVICE ]]; then
-  SERVICE=${PWD##*/}
-fi
-
-if [[ -z $DOCKER_REPO && -n $1 ]]; then
-  DOCKER_REPO=$1
-fi
-
-if [[ -z $DOCKER_REPO ]]; then
-  DOCKER_REPO="quay.io/democracyworks/${SERVICE}"
-fi
+docker-pull -f deploy/build.config
 
 echo '--- building docker image'
-if [[ -n $DATOMIC_USERNAME && -n $DATOMIC_PASSWORD ]]; then
-  cat profiles.clj.sample | perl -pe 's/USERNAME/$ENV{"DATOMIC_USERNAME"}/' | \
-    perl -pe 's/PASSWORD/$ENV{"DATOMIC_PASSWORD"}/' > profiles.clj
-fi
+{{#datomic?}}
+if [[ ! -e "profiles.clj" ]]; then echo '{}' > profiles.clj; fi
+ROK8S_DOCKER_BUILD_EXTRAARGS=\
+  "--build-arg DATOMIC_USERNAME=$DATOMIC_USERNAME \
+   --build-arg DATOMIC_PASSWORD=$DATOMIC_PASSWORD" \
+{{/datomic?}}
+docker-build -f deploy/build.config
 
-if [[ -z $BUILDKITE_BRANCH ]]; then
-  BRANCH=$(git rev-parse --abbrev-ref HEAD)
-else
-  BRANCH=$BUILDKITE_BRANCH
-fi
-
-if [[ -z $BUILDKITE_COMMIT ]]; then
-  COMMIT=HEAD
-else
-  COMMIT=$BUILDKITE_COMMIT
-fi
-
-IMAGE_TAG=${BRANCH}-$(git rev-parse --short ${COMMIT})
-
-IMAGE_NAME_SHA="${DOCKER_REPO}:${IMAGE_TAG}"
-IMAGE_NAME_BRANCH="${DOCKER_REPO}:${BRANCH}"
-
-echo "Building ${IMAGE_NAME_SHA}"
-docker build --pull \
-             -t ${IMAGE_NAME_SHA} .
-
-if [[ $CI = "true" ]]; then
-  echo '--- pushing docker image to registry'
-  echo "Pushing as ${IMAGE_NAME_SHA}"
-  docker push ${IMAGE_NAME_SHA}
-  echo "Pushing as ${IMAGE_NAME_BRANCH}"
-  docker tag ${IMAGE_NAME_SHA} ${IMAGE_NAME_BRANCH}
-  docker push ${IMAGE_NAME_BRANCH}
-else
-  echo "If you'd like to push this to the Docker repo, run: docker push ${IMAGE_NAME_SHA}"
-fi
+docker-push -f deploy/build.config
 
 if hash buildkite-agent 2>/dev/null ; then
-  echo '--- saving container-image metadata'
-  buildkite-agent meta-data set container-image ${IMAGE_NAME_SHA}
+  echo '--- saving container-image metadata for legacy k8s deploy'
+  buildkite-agent meta-data set container-image ${DOCKERTAG}:${BUILDKITE_COMMIT}
 fi

@@ -5,20 +5,22 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/tools.logging "0.4.1"]
-                 [turbovote.resource-config "0.2.1"]
+                 [org.clojure/core.async "0.4.474"]
+                 [democracyworks/resource-config "1.0.0"]
 {{#datomic?}}
                  [democracyworks/datomic-toolbox "2.0.5"
                   :exclusions [com.datomic/datomic-pro]]
                  [com.datomic/datomic-pro "0.9.5703"
                   :exclusions [org.slf4j/slf4j-nop
                                org.slf4j/slf4j-log4j12]]
-                 [com.amazonaws/aws-java-sdk-dynamodb "1.11.402"
+                 [com.amazonaws/aws-java-sdk-dynamodb "1.11.460"
                   :exclusions [commons-codec commons-logging]]
 {{/datomic?}}
                  [ch.qos.logback/logback-classic "1.2.3"]
-                 [democracyworks/kehaar "0.11.4"]]
+                 [democracyworks/kehaar "1.0.0"]
+                 [mount "0.1.14"]]
   :plugins [[com.pupeno/jar-copier "0.4.0"]]
-  :java-agents [[com.newrelic.agent.java/newrelic-agent "4.5.0"]]
+  :java-agents [[com.newrelic.agent.java/newrelic-agent "4.8.0"]]
   :jar-copier {:java-agents true
                :destination "resources/jars"}
   :prep-tasks ["javac" "compile" "jar-copier"]

@@ -1,4 +1,4 @@
-FROM quay.io/democracyworks/clojure-yourkit:lein-2.7.1
+FROM quay.io/democracyworks/clojure-yourkit:lein-2.8.1
 
 RUN mkdir -p /usr/src/{{name}}
 WORKDIR /usr/src/{{name}}
@@ -7,6 +7,7 @@ WORKDIR /usr/src/{{name}}
 COPY profiles.clj /usr/src/{{name}}/
 {{/datomic?}}
 COPY project.clj /usr/src/{{name}}/
+COPY ["docker/app_container", "/"]
 
 ARG env=production
 {{#datomic?}}
@@ -21,9 +22,4 @@ COPY . /usr/src/{{name}}
 RUN lein with-profiles $env{{#datomic?}},datomic-repo{{/datomic?}},test test
 RUN lein with-profiles $env{{#datomic?}},datomic-repo{{/datomic?}} uberjar
 
-CMD java ${JVM_OPTS:--XX:+UseG1GC} \
-    -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap \
-    -XX:MaxRAMFraction=1 \
-    -javaagent:resources/jars/com.newrelic.agent.java/newrelic-agent.jar \
-    $YOURKIT_AGENT_OPTION \
-    -jar target/{{name}}.jar
+ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]

@@ -17,7 +17,5 @@
            :outgoing-events []}}{{^datomic?}}}{{/datomic?}}{{#datomic?}}
 
  :datomic {:uri #resource-config/env "{{env-var-style}}_DATOMIC_URI"
-           :partition :{{name}}
-           :initialize true
-           :run-migrations true}}
+           :partition :{{name}}}}
 {{/datomic?}}
