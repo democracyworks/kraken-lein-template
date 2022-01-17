@@ -37,8 +37,8 @@
     (main/info " * `git commit -am \"initial commit\"`")
     (main/info " * push this to github")
     (main/info " * make a Buildkite project")
-    (->> [[".buildkite/pipeline.yml" (render ".buildkite/pipeline.yml" data)]
-          [".gitignore" (render ".gitignore" data)]
+    (->> [[".buildkite/pipeline.yml" (render "buildkite/pipeline.yml" data)]
+          [".gitignore" (render "gitignore" data)]
           ["Dockerfile" (render "Dockerfile" data)]
           ["docker/app_container/usr/local/bin/entrypoint.sh"
            (render "entrypoint.sh" data) :executable true]
