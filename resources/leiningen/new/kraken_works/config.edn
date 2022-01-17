@@ -1,6 +1,6 @@
 {:rabbitmq
- {:connection {:host #resource-config/env "RABBITMQ_PORT_5672_TCP_ADDR"
-               :port #resource-config/edn #resource-config/env "RABBITMQ_PORT_5672_TCP_PORT"}
+ {:connection {:host #env "RABBITMQ_PORT_5672_TCP_ADDR"
+               :port #long #env "RABBITMQ_PORT_5672_TCP_PORT"}
   :kehaar {:event-exchanges [{:exchange "events"}]
 
            :incoming-services
@@ -16,6 +16,6 @@
 
            :outgoing-events []}}{{^datomic?}}}{{/datomic?}}{{#datomic?}}
 
- :datomic {:uri #resource-config/env "{{env-var-style}}_DATOMIC_URI"
+ :datomic {:uri #env "{{env-var-style}}_DATOMIC_URI"
            :partition :{{name}}}}
 {{/datomic?}}

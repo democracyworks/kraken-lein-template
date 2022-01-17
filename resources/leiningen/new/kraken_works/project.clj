@@ -1,30 +1,40 @@
 (defproject {{name}} "0.1.0-SNAPSHOT"
   :description ""
   :url "http://example.com/FIXME"
-  :license {:name "Eclipse Public License"
-            :url "http://www.eclipse.org/legal/epl-v10.html"}
-  :dependencies [[org.clojure/clojure "1.9.0"]
-                 [org.clojure/tools.logging "0.4.1"]
-                 [org.clojure/core.async "0.4.474"]
-                 [democracyworks/resource-config "1.0.0"]
+  :dependencies [[org.clojure/clojure "1.10.3"]
+                 [org.clojure/tools.logging "1.2.4"]
+                 [org.clojure/core.async "1.5.648"]
+                 [aero "1.1.6"]
 {{#datomic?}}
                  [democracyworks/datomic-toolbox "2.0.5"
                   :exclusions [com.datomic/datomic-pro]]
-                 [com.datomic/datomic-pro "0.9.5703"
-                  :exclusions [org.slf4j/slf4j-nop
-                               org.slf4j/slf4j-log4j12]]
-                 [com.amazonaws/aws-java-sdk-dynamodb "1.11.460"
-                  :exclusions [commons-codec commons-logging]]
+                 [com.datomic/datomic-pro "1.0.6222"]
+                 [com.amazonaws/aws-java-sdk-dynamodb "1.11.913"]
+                 [com.amazonaws/aws-java-sdk-sts "1.11.913"]
 {{/datomic?}}
-                 [ch.qos.logback/logback-classic "1.2.3"]
-                 [democracyworks/kehaar "1.0.0"]
-                 [mount "0.1.14"]]
-  :plugins [[com.pupeno/jar-copier "0.4.0"]]
-  :java-agents [[com.newrelic.agent.java/newrelic-agent "4.8.0"]]
-  :jar-copier {:java-agents true
-               :destination "resources/jars"}
-  :prep-tasks ["javac" "compile" "jar-copier"]
+                 [democracyworks/kehaar "1.0.3"]
+                 [mount "0.1.16"]
 
+                 ;;; Logging: see https://github.com/stuartsierra/log.dev
+
+                 [ch.qos.logback/logback-core "1.2.10"]
+                 [ch.qos.logback/logback-classic "1.2.10"]
+                 [org.apache.logging.log4j/log4j-to-slf4j "2.17.1"]
+                 [org.slf4j/slf4j-api "1.7.33"]
+                 [org.slf4j/jcl-over-slf4j "1.7.33"]
+                 [org.slf4j/log4j-over-slf4j "1.7.33"]
+                 [org.slf4j/osgi-over-slf4j "1.7.33"]]
+  :exclusions [;;; Logging: see https://github.com/stuartsierra/log.dev
+
+               commons-logging
+               log4j
+               org.apache.logging.log4j/log4j
+               org.clojure/clojurescript
+               org.slf4j/simple
+               org.slf4j/slf4j-jcl
+               org.slf4j/slf4j-nop
+               org.slf4j/slf4j-log4j12
+               org.slf4j/slf4j-log4j13]
   :main ^:skip-aot {{name}}.core
 {{#datomic?}}
   :repositories {"my.datomic.com" {:url "https://my.datomic.com/repo"
