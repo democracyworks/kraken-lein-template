@@ -1,26 +1,12 @@
----
 steps:
-  - name: "Build"
-    command: "script/build"
-
-  - wait
-
-  - command: "script/deploy_wrap.sh development"
-    label: "Deploy to Development"
-    branches: "master"
-
-  - command: "script/deploy_wrap.sh production"
-    label: "Deploy to Production"
-    branches: "v*.*.*"
-    #Branch filters also imply Tag filter.
-    #Make sure "Build Tags" is checked in the Github settings for the project
-
-  - trigger: democracy-works-kubernetes
-    label: "Deploy to legacy k8s"
-    branches: master
-    async: true
-    build:
-      branch: master
-      env:
-        DW_COMPONENT: {{name}}
-        SOURCE_JOB_ID: "${BUILDKITE_JOB_ID}"
+- label: "Build"
+  command: "script/build"
+  plugins:
+  - docker#v3.8.0:
+      image: quay.io/democracyworks/reactiveops-ci-images:latest
+      always-pull: true
+      propagate-environment: true
+      volumes:
+      - "${HOME}/.docker:/root/.docker:ro"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+  timeout_in_minutes: 15
