@@ -54,7 +54,6 @@
             ["profiles.clj.sample" (render "profiles.clj.sample" data)])
           ["project.clj" (render "project.clj" data)]
           ["README.md" (render "README.md" data)]
-          ["LICENSE" (render "LICENSE" data)]
 
           ["script/env.sh" (render "script/env.sh" data)]
           ["script/build" (render "script/build" data) :executable true]

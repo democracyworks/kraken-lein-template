@@ -50,10 +50,3 @@ Run it:
 ```
 
 TODO: If any more env vars are needed, add them to docker-compose command above.
-
-## License
-
-Copyright © 2018 Democracy Works, Inc.
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
