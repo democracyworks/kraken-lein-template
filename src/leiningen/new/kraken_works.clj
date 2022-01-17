@@ -48,8 +48,6 @@
           ["deploy/production.config" (render "deploy/production.config" data)]
           [(str "deploy/" (:name data) ".pod_disruption_budget.yml")
            (render "deploy/pod_disruption_budget.yml" data)]
-
-          ["newrelic.yml" (render "newrelic.yml" data)]
           (when (:datomic? data)
             ["profiles.clj.sample" (render "profiles.clj.sample" data)])
           ["project.clj" (render "project.clj" data)]
