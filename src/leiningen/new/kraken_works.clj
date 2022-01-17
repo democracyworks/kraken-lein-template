@@ -44,10 +44,6 @@
            (render "entrypoint.sh" data) :executable true]
           ["docker-compose.yml" (render "docker-compose.yml" data)]
           ["deploy/build.config" (render "deploy/build.config" data)]
-          ["deploy/development.config" (render "deploy/development.config" data)]
-          ["deploy/production.config" (render "deploy/production.config" data)]
-          [(str "deploy/" (:name data) ".pod_disruption_budget.yml")
-           (render "deploy/pod_disruption_budget.yml" data)]
           (when (:datomic? data)
             ["profiles.clj.sample" (render "profiles.clj.sample" data)])
           ["project.clj" (render "project.clj" data)]
