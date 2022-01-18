@@ -1,6 +1,4 @@
-FROM clojure:openjdk-11-lein-2.9.8
-
-RUN useradd -m -r -g root {{name}}
+FROM public.ecr.aws/docker/library/clojure:openjdk-11-lein AS build
 
 RUN mkdir -p /usr/src/{{name}}
 
@@ -8,15 +6,10 @@ WORKDIR /usr/src/{{name}}
 
 ## Add files changing less often first for fetching dependencies as a Docker
 ## build cache optimization.
-{{#datomic?}}
-COPY profiles.clj /usr/src/{{name}}/
-{{/datomic?}}
 COPY project.clj /usr/src/{{name}}/
 
-{{#datomic?}}
 ARG DATOMIC_USERNAME
 ARG DATOMIC_PASSWORD
-{{/datomic?}}
 
 RUN lein deps
 
@@ -25,7 +18,18 @@ COPY . .
 
 RUN lein do test, uberjar
 
-COPY docker/app_container/ /
+FROM public.ecr.aws/docker/library/openjdk:11-jre
+
+RUN useradd -m -r -g root {{name}}
+
+RUN mkdir -p /srv/{{name}}/target
+
+## Copy the uberjar from the build image.
+COPY --from=build /usr/src/{{name}}/target/{{name}}.jar /srv/{{name}}/target/
+
+COPY docker/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+WORKDIR /srv/{{name}}
 
 ## Drop privileges.
 USER {{name}}
