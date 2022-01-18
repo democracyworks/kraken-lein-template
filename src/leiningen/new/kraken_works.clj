@@ -31,11 +31,10 @@
 
     (main/info (str "TODO: (you probably want to `cd " name "` first)"))
     (main/info " * Review and address the TODO items in the README.")
-    (main/info " * Add any other needed kubernetes resources to the `deploy/` dirs (see existing similar components).")
     (main/info " * `git init`")
     (main/info " * `git add .`")
     (main/info " * `git commit -am \"initial commit\"`")
-    (main/info " * push this to github")
+    (main/info " * push this to GitHub")
     (main/info " * make a Buildkite project")
     (->> [[".buildkite/pipeline.yml" (render "buildkite/pipeline.yml" data)]
           [".dockerignore" (render "dockerignore" data)]
@@ -52,9 +51,6 @@
 
           ["script/env.sh" (render "script/env.sh" data)]
           ["script/build" (render "script/build" data) :executable true]
-          ["script/deploy" (render "script/deploy" data) :executable true]
-          ["script/deploy_wrap.sh" (render "script/deploy_wrap.sh" data)
-           :executable true]
 
           ["resources/config.edn" (render "config.edn" data)]
           (when (:datomic? data)

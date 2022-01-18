@@ -15,8 +15,3 @@ ROK8S_DOCKER_BUILD_EXTRAARGS=\
 docker-build -f deploy/build.config
 
 docker-push -f deploy/build.config
-
-if hash buildkite-agent 2>/dev/null ; then
-  echo '--- saving container-image metadata for legacy k8s deploy'
-  buildkite-agent meta-data set container-image ${DOCKERTAG}:${BUILDKITE_COMMIT}
-fi
