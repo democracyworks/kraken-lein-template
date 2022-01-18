@@ -1,6 +1,6 @@
 (ns {{name}}.handlers-test
-  (:require [{{name}}.handlers :refer :all]
-            [clojure.test :refer :all]))
+  (:require [{{name}}.handlers :as handlers]
+            [clojure.test :refer [deftest is]]))
 
 (deftest ok-test
-  (is (= :ok (:status (ok {})))))
+  (is (= :ok (:status (handlers/ok {})))))

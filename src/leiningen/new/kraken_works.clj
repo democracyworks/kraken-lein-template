@@ -60,6 +60,7 @@
             ["resources/schemas/.gitkeep" ""])
           ["resources/logback.xml" (render "logback.xml" data)]
 
+          ["src/{{sanitized}}/config.clj" (render "config.clj" data)]
           ["src/{{sanitized}}/core.clj" (render "core.clj" data)]
           ["src/{{sanitized}}/queue.clj" (render "queue.clj" data)]
           (when (:datomic? data)
