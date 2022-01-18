@@ -38,10 +38,11 @@
     (main/info " * push this to github")
     (main/info " * make a Buildkite project")
     (->> [[".buildkite/pipeline.yml" (render "buildkite/pipeline.yml" data)]
+          [".dockerignore" (render "dockerignore" data)]
           [".gitignore" (render "gitignore" data)]
           ["Dockerfile" (render "Dockerfile" data)]
-          ["docker/app_container/usr/local/bin/entrypoint.sh"
-           (render "entrypoint.sh" data) :executable true]
+          ["docker/entrypoint.sh"
+           (render "docker/entrypoint.sh" data) :executable true]
           ["docker-compose.yml" (render "docker-compose.yml" data)]
           ["deploy/build.config" (render "deploy/build.config" data)]
           (when (:datomic? data)
