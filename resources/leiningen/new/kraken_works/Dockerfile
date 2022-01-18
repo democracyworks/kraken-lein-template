@@ -8,8 +8,10 @@ WORKDIR /usr/src/{{name}}
 ## build cache optimization.
 COPY project.clj /usr/src/{{name}}/
 
+{{#datomic?}}
 ARG DATOMIC_USERNAME
 ARG DATOMIC_PASSWORD
+{{/datomic?}}
 
 RUN lein deps
 
