@@ -1,28 +1,31 @@
-version: '2'
+version: "2.4"
 services:
   app:
-    build: .
+    build:
+      context: .
     depends_on:
+{{#datomic?}}
+      - datomic
+{{/datomic?}}
       - rabbitmq
     environment:
-      DEPLOYMENT_NAME: {{name}}
-      CGROUP_HEAP: "true"
-      MaxRAMFraction: 2
       RABBITMQ_PORT_5672_TCP_ADDR: rabbitmq
       RABBITMQ_PORT_5672_TCP_PORT: "5672"
 {{#datomic?}}
       {{env-var-style}}_DATOMIC_URI: "datomic:dev://datomic:4334/{{name}}"
   datomic:
-    image: quay.io/democracyworks/datomic-tx:0.9.5703
+    image: quay.io/democracyworks/datomic-pro-transactor:1.0.6269
     ports:
       - "4334:4334"
       - "4335:4335"
       - "4336:4336"
     environment:
-      ALT_HOST: localhost
+      DATOMIC_ALT_HOST: localhost
+    hostname: datomic
+    mem_limit: 2g
 {{/datomic?}}
   rabbitmq:
-    image: rabbitmq:3.7.8-management
+    image: rabbitmq:3.9-management
     ports:
-      - "45672:5672"
-      - "55672:15672"
+      - "5672:5672"
+      - "15672:15672"

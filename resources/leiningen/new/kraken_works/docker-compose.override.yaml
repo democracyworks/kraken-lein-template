@@ -1,0 +1,15 @@
+###
+### This file is automatically merged with docker-compose.yaml but should be
+### kept out of version control. You can put private environment variables or
+### local overrides in here for testing.
+####
+
+version: "2.4"
+{{#datomic?}}
+services:
+  app:
+    build:
+      args:
+        DATOMIC_USERNAME: real@email.address
+        DATOMIC_PASSWORD: real-download-key
+{{/datomic?}}

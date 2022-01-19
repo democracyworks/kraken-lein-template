@@ -28,9 +28,10 @@
   [name & opts]
   (let [data (make-data name opts)]
     (main/info (str "Generating fresh kraken-works project in directory " (:sanitized data) "/."))
-
     (main/info (str "TODO: (you probably want to `cd " name "` first)"))
     (main/info " * Review and address the TODO items in the README.")
+    (main/info " * Optionally review and fill in local information in docker-compose.override.yaml")
+    (main/info " * `chmod +x docker/entrypoint.sh`")
     (main/info " * `git init`")
     (main/info " * `git add .`")
     (main/info " * `git commit -am \"initial commit\"`")
@@ -42,7 +43,8 @@
           ["Dockerfile" (render "Dockerfile" data)]
           ["docker/entrypoint.sh"
            (render "docker/entrypoint.sh" data) :executable true]
-          ["docker-compose.yml" (render "docker-compose.yml" data)]
+          ["docker-compose.yaml" (render "docker-compose.yaml" data)]
+          ["docker-compose.override.yaml" (render "docker-compose.override.yaml" data)]
           ["deploy/build.config" (render "deploy/build.config" data)]
           (when (:datomic? data)
             ["profiles.clj.sample" (render "profiles.clj.sample" data)])

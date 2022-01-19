@@ -1,12 +1,27 @@
-/target
-/classes
-/checkouts
+###
+### Leiningen
+###
+### See: https://github.com/github/gitignore/blob/main/Leiningen.gitignore
+###
+
 pom.xml
 pom.xml.asc
 *.jar
 *.class
-/.lein-*
-/.nrepl-port
-/dev-resources
-profiles.clj
-{{name}}@.service
+/lib/
+/classes/
+/target/
+/checkouts/
+.lein-deps-sum
+.lein-repl-history
+.lein-plugins/
+.lein-failures
+.nrepl-port
+.cpcache/
+
+###
+### Project
+###
+
+/docker-compose.override.y?ml
+/profiles.clj
