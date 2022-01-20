@@ -8,9 +8,9 @@ docker-pull -f deploy/build.config
 echo '--- building docker image'
 {{#datomic?}}
 if [[ ! -e "profiles.clj" ]]; then echo '{}' > profiles.clj; fi
-ROK8S_DOCKER_BUILD_EXTRAARGS=\
-  "--build-arg DATOMIC_USERNAME=$DATOMIC_USERNAME \
-   --build-arg DATOMIC_PASSWORD=$DATOMIC_PASSWORD" \
+ROK8S_DOCKER_BUILD_EXTRAARGS="\
+  --build-arg DATOMIC_USERNAME=$DATOMIC_USERNAME \
+  --build-arg DATOMIC_PASSWORD=$DATOMIC_PASSWORD" \
 {{/datomic?}}
 docker-build -f deploy/build.config
 
